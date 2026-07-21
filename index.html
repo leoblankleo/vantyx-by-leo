@@ -62,7 +62,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 
 /* ─── GRID ─── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .2s;position:relative;overflow:visible;z-index:1}
 .card.legendary{border:2px double var(--legendary);box-shadow:0 0 12px rgba(251,191,36,0.12)}
 .card.legendary:hover{border-color:var(--legendary);box-shadow:0 0 20px rgba(251,191,36,0.2);background:var(--bg3)}
 .card.rare{border:1.5px dashed var(--rare)}
@@ -94,6 +94,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 .tag{font-size:.7rem;padding:4px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--text4);font-family:'JetBrains Mono',monospace;font-weight:500}
 .tag b{color:var(--text3)}
 .card-expand{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.card.open{z-index:10}
 .card.open .card-expand{max-height:400px}
 .card-expand-inner{padding:0 20px 18px}
 .card-expand-inner .card-row{margin-bottom:8px}
