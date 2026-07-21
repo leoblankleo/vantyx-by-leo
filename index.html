@@ -62,7 +62,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 
 /* ─── GRID ─── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .2s;position:relative;overflow:visible;z-index:1}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;transition:all .2s;position:relative}
 .card.legendary{border:2px double var(--legendary);box-shadow:0 0 12px rgba(251,191,36,0.12)}
 .card.legendary:hover{border-color:var(--legendary);box-shadow:0 0 20px rgba(251,191,36,0.2);background:var(--bg3)}
 .card.rare{border:1.5px dashed var(--rare)}
@@ -93,11 +93,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 .card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .tag{font-size:.7rem;padding:4px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--text4);font-family:'JetBrains Mono',monospace;font-weight:500}
 .tag b{color:var(--text3)}
-.card-expand{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
-.card.open{z-index:10}
-.card.open .card-expand{max-height:400px}
-.card-expand-inner{padding:0 20px 18px}
-.card-expand-inner .card-row{margin-bottom:8px}
+
 .divider{height:1px;background:var(--border);margin:12px 0}
 
 /* ─── LIVE BOARD ─── */
@@ -370,7 +366,7 @@ if(!list.length){g.innerHTML='';e.style.display='';return}
 e.style.display='none';
 g.innerHTML=list.map(p=>{
 const ch=((p.w/TW)*100).toFixed(2);
-return`<div class="card ${p.r}" onclick="this.classList.toggle('open')">
+return`<div class="card ${p.r}">
 <div class="card-head">
 <div class="card-name"><span class="ic">${p.e}</span>${p.n}</div>
 <span class="rtag ${p.r}">${p.r}</span>
@@ -379,7 +375,9 @@ return`<div class="card ${p.r}" onclick="this.classList.toggle('open')">
 <div class="card-chance">${ch}% roll chance &middot; weight ${p.w}/${TW}</div>
 <div class="card-row"><div class="lbl">Passive</div><div class="val passive">${p.p}</div></div>
 <div class="card-row"><div class="lbl">Ability 1 &mdash; F</div><div class="val">${p.a1}</div></div>
+<div class="card-row"><div class="lbl">A1 Details</div><div class="val">${p.a1d}</div></div>
 <div class="card-row"><div class="lbl">Ability 2 &mdash; Shift+F</div><div class="val">${p.a2}</div></div>
+<div class="card-row"><div class="lbl">A2 Details</div><div class="val">${p.a2d}</div></div>
 <div class="card-tags">
 <span class="tag">A1 CD <b>${fmtCd(p.c1)}</b></span>
 <span class="tag">A1 Dur <b>${p.d1?p.d1+'s':'&mdash;'}</b></span>
@@ -388,11 +386,6 @@ return`<div class="card ${p.r}" onclick="this.classList.toggle('open')">
 <span class="tag">Kills <b>${p.k}</b></span>
 </div>
 </div>
-<div class="card-expand"><div class="card-expand-inner">
-<div class="divider"></div>
-<div class="card-row"><div class="lbl">A1 Details</div><div class="val">${p.a1d}</div></div>
-<div class="card-row"><div class="lbl">A2 Details</div><div class="val">${p.a2d}</div></div>
-</div></div>
 </div>`}).join('');
 }
 function setFilter(f,el){filter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
