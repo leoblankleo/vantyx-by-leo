@@ -120,6 +120,28 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 .cmd-perm.built{color:#22c55e}
 @media(max-width:768px){.cmd-grid{grid-template-columns:1fr}}
 
+/* ─── REVIEWS ─── */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.review{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
+.review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.review-user{font-weight:700;color:var(--white);font-size:.9rem}
+.review-stars{color:#fbbf24;font-size:.85rem;letter-spacing:1px}
+.review-text{font-size:.85rem;color:var(--text3);line-height:1.6}
+.review-date{font-size:.7rem;color:var(--text5);margin-top:10px}
+.review-form{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px}
+.review-form h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px}
+.review-form textarea{width:100%;min-height:80px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.85rem;resize:vertical;outline:none;margin-bottom:10px}
+.review-form textarea:focus{border-color:var(--text4)}
+.review-form .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.review-form input[type=text]{flex:1;min-width:140px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.85rem;outline:none}
+.review-form input[type=text]:focus{border-color:var(--text4)}
+.review-form .star-pick{display:flex;gap:4px}
+.review-form .star-pick span{cursor:pointer;font-size:1.2rem;color:var(--text5);transition:color .15s}
+.review-form .star-pick span.on{color:#fbbf24}
+.review-submit{padding:8px 20px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--white);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s}
+.review-submit:hover{background:var(--white);color:var(--black)}
+@media(max-width:768px){.reviews-grid{grid-template-columns:1fr}}
+
 /* ─── EMPTY ─── */
 .empty{text-align:center;padding:60px 20px;color:var(--text5)}
 .empty .icon{font-size:3rem;margin-bottom:12px;opacity:.3}
@@ -162,6 +184,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div class="nav-tabs">
 <button class="nav-tab active" onclick="showTab('powers',this)">Powers</button>
 <button class="nav-tab" onclick="showTab('commands',this)">Commands</button>
+<button class="nav-tab" onclick="showTab('reviews',this)">Reviews</button>
 <button class="nav-tab" onclick="showTab('live',this)">Live Board</button>
 </div>
 <div class="search-box">
@@ -291,7 +314,30 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 </div>
 </div>
 
+<div id="tab-reviews" style="display:none">
+
+<div class="review-form">
+<h3>Leave a Review</h3>
+<div class="row" style="margin-bottom:10px">
+<input type="text" id="rv-name" placeholder="Your name">
+<div class="star-pick" id="rv-stars">
+<span onclick="pickStars(1)">&#9733;</span>
+<span onclick="pickStars(2)">&#9733;</span>
+<span onclick="pickStars(3)">&#9733;</span>
+<span onclick="pickStars(4)">&#9733;</span>
+<span onclick="pickStars(5)">&#9733;</span>
 </div>
+</div>
+<textarea id="rv-text" placeholder="Write your review about Vantyx SMP..."></textarea>
+<div class="row">
+<button class="review-submit" onclick="submitReview()">Submit Review</button>
+</div>
+</div>
+
+<div class="reviews-grid" id="reviews-grid"></div>
+
+</div>
+
 </div>
 
 <div class="footer">
@@ -389,8 +435,38 @@ return`<div class="card ${p.r}">
 </div>`}).join('');
 }
 function setFilter(f,el){filter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
-function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.getElementById('tab-live').style.display=t==='live'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none'}
+function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.getElementById('tab-reviews').style.display=t==='reviews'?'':'none';document.getElementById('tab-live').style.display=t==='live'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none'}
 render();
+
+/* ─── REVIEWS ─── */
+let rvStars=0;
+const defaultReviews=[
+{u:"xXSlayerXx",s:5,t:"Best power plugin I've ever played. Frost is insane.",d:"2026-07-20"},
+{u:"CreeperHunter",s:4,t:"Love it but Blademaster needs a small nerf.",d:"2026-07-19"},
+{u:"DarkMage99",s:5,t:"Voidcaller + Endermen is so broken lmao keep it",d:"2026-07-18"},
+{u:"PvPKing",s:3,t:"Cool powers but some cooldowns are too long",d:"2026-07-17"},
+{u:"BuilderPro",s:5,t:"Finally a power plugin that actually works on 1.21",d:"2026-07-16"}
+];
+function getReviews(){const s=localStorage.getItem('vantyx-reviews');return s?JSON.parse(s):[...defaultReviews]}
+function saveReviews(r){localStorage.setItem('vantyx-reviews',JSON.stringify(r))}
+function pickStars(n){rvStars=n;document.querySelectorAll('#rv-stars span').forEach((s,i)=>s.classList.toggle('on',i<n))}
+function renderReviews(){
+const reviews=getReviews();
+document.getElementById('reviews-grid').innerHTML=reviews.map(r=>`<div class="review"><div class="review-head"><span class="review-user">${r.u}</span><span class="review-stars">${'&#9733;'.repeat(r.s)}${'&#9734;'.repeat(5-r.s)}</span></div><div class="review-text">${r.t}</div><div class="review-date">${r.d}</div></div>`).join('');
+}
+function submitReview(){
+const name=document.getElementById('rv-name').value.trim();
+const text=document.getElementById('rv-text').value.trim();
+if(!name||!text||!rvStars)return;
+const reviews=getReviews();
+reviews.unshift({u:name,s:rvStars,t:text,d:new Date().toISOString().split('T')[0]});
+saveReviews(reviews);
+document.getElementById('rv-name').value='';
+document.getElementById('rv-text').value='';
+pickStars(0);
+renderReviews();
+}
+renderReviews();
 </script>
 </body>
 </html>
