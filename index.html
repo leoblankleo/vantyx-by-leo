@@ -449,7 +449,7 @@ const defaultReviews=[
 {u:"PvPKing",s:3,t:"Cool powers but some cooldowns are too long",d:"2026-07-17"},
 {u:"BuilderPro",s:5,t:"Finally a power plugin that actually works on 1.21",d:"2026-07-16"}
 ];
-function getReviews(){const s=localStorage.getItem('vantyx-reviews');return s?JSON.parse(s):[...defaultReviews]}
+function getReviews(){const s=localStorage.getItem('vantyx-reviews');return s?JSON.parse(s):[]}
 function saveReviews(r){localStorage.setItem('vantyx-reviews',JSON.stringify(r))}
 function pickStars(n){rvStars=n;document.querySelectorAll('#rv-stars span').forEach((s,i)=>s.classList.toggle('on',i<n))}
 function renderReviews(){
