@@ -102,6 +102,21 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 .board-empty h3{font-size:1.2rem;color:var(--text4);font-weight:600;margin-bottom:6px}
 .board-empty p{font-size:.85rem;color:var(--text5)}
 .board-empty .ip{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--text3);margin-top:16px;background:var(--bg2);border:1px solid var(--border);display:inline-flex;padding:10px 20px;border-radius:8px}
+.board-status{text-align:center;padding:20px 20px 0;font-size:.85rem;color:var(--text4)}
+.board-status .count{color:var(--text);font-weight:700;font-size:1.1rem}
+.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:20px;max-width:900px;margin:0 auto}
+.player-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:border-color .2s}
+.player-card:hover{border-color:var(--border2)}
+.player-avatar{width:40px;height:40px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:var(--text3);flex-shrink:0}
+.player-info{min-width:0}
+.player-name{font-size:.95rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-power{font-size:.8rem;font-weight:500;margin-top:2px}
+.board-offline{text-align:center;padding:60px 20px;color:var(--text5)}
+.board-offline .icon{font-size:3rem;margin-bottom:12px;opacity:.3}
+.board-offline p{font-size:.9rem;color:var(--text4)}
+.board-loading{text-align:center;padding:60px 20px;color:var(--text5)}
+.board-loading .spinner{display:inline-block;width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--text3);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ─── COMMANDS ─── */
 .cmd-section{margin-bottom:36px}
@@ -207,12 +222,14 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div class="empty" id="empty" style="display:none"><div class="icon">&#8709;</div><p>No powers found.</p></div>
 </div>
 <div id="tab-live" style="display:none">
-<div class="board-empty">
+<div class="board-status" id="board-status"></div>
+<div class="board-grid" id="board-grid"></div>
+<div class="board-offline" id="board-offline" style="display:none">
 <div class="icon">&#9889;</div>
-<h3>Live Board</h3>
-<p>Player data will appear here once the server is online and the plugin is connected.</p>
+<p>Server offline or API unreachable.</p>
 <div class="ip">vantyxsmp.minekeep.gg</div>
 </div>
+<div class="board-loading" id="board-loading"><div class="spinner"></div></div>
 </div>
 <div id="tab-commands" style="display:none">
 
@@ -437,8 +454,40 @@ return`<div class="card ${p.r}">
 </div>`}).join('');
 }
 function setFilter(f,el){filter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
-function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.getElementById('tab-reviews').style.display=t==='reviews'?'':'none';document.getElementById('tab-live').style.display=t==='live'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none';if(t==='reviews')renderReviews()}
+function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.getElementById('tab-reviews').style.display=t==='reviews'?'':'none';document.getElementById('tab-live').style.display=t==='live'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none';if(t==='reviews')renderReviews();if(t==='live')renderLive()}
 render();
+
+/* ─── LIVE BOARD ─── */
+const API_URL='http://vantyxsmp.minekeep.gg:8080/players';
+let livePolling=null;
+function renderLive(){
+if(livePolling)clearInterval(livePolling);
+fetchLive();
+livePolling=setInterval(fetchLive,15000);
+}
+function fetchLive(){
+fetch(API_URL,{mode:'cors'}).then(r=>r.json()).then(data=>{
+document.getElementById('board-loading').style.display='none';
+if(data.count===0){
+document.getElementById('board-offline').style.display='none';
+document.getElementById('board-status').innerHTML='<span class="count">0</span> players online';
+document.getElementById('board-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text5)">No players online.</div>';
+}else{
+document.getElementById('board-offline').style.display='none';
+document.getElementById('board-status').innerHTML='<span class="count">'+data.count+'</span> player'+(data.count!==1?'s':'')+' online';
+document.getElementById('board-grid').innerHTML=data.players.map(p=>{
+const initial=p.name.charAt(0).toUpperCase();
+return '<div class="player-card"><div class="player-avatar">'+initial+'</div><div class="player-info"><div class="player-name">'+esc(p.name)+'</div><div class="player-power" style="color:'+p.rarityColor+'">'+esc(p.power)+'</div></div></div>';
+}).join('');
+}
+}).catch(()=>{
+document.getElementById('board-loading').style.display='none';
+document.getElementById('board-offline').style.display='';
+document.getElementById('board-grid').innerHTML='';
+document.getElementById('board-status').innerHTML='';
+});
+}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
 /* ─── REVIEWS ─── */
 let rvStars=0;
