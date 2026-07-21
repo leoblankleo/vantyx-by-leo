@@ -146,7 +146,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <span class="copy" onclick="navigator.clipboard.writeText('vantyxsmp.minekeep.gg');this.textContent='Copied!';setTimeout(()=>this.textContent='Click to copy',1500)">Click to copy</span>
 </div>
 <div class="hero-stats">
-<div class="hero-stat"><div class="n">50</div><div class="l">Powers</div></div>
+<div class="hero-stat"><div class="n">100</div><div class="l">Powers</div></div>
 <div class="hero-stat"><div class="n">100</div><div class="l">Abilities</div></div>
 <div class="hero-stat"><div class="n">4</div><div class="l">Rarities</div></div>
 <div class="hero-stat"><div class="n">300</div><div class="l">Total Weight</div></div>
@@ -158,7 +158,6 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div class="nav-tabs">
 <button class="nav-tab active" onclick="showTab('powers',this)">Powers</button>
 <button class="nav-tab" onclick="showTab('commands',this)">Commands</button>
-<button class="nav-tab" onclick="showTab('live',this)">Live Board</button>
 </div>
 <div class="search-box">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -178,14 +177,6 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div id="tab-powers">
 <div class="grid" id="grid"></div>
 <div class="empty" id="empty" style="display:none"><div class="icon">&#8709;</div><p>No powers found.</p></div>
-</div>
-<div id="tab-live" style="display:none">
-<div class="board-empty">
-<div class="icon">&#9889;</div>
-<h3>Live Board</h3>
-<p>Player data will appear here once the server is online and the plugin is connected.</p>
-<div class="ip">vantyxsmp.minekeep.gg</div>
-</div>
 </div>
 <div id="tab-commands" style="display:none">
 
@@ -388,7 +379,7 @@ return`<div class="card ${p.r}" onclick="this.classList.toggle('open')">
 </div>`}).join('');
 }
 function setFilter(f,el){filter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
-function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.getElementById('tab-live').style.display=t==='live'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none'}
+function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none'}
 render();
 </script>
 </body>
