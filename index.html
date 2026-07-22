@@ -62,15 +62,8 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 
 /* ─── GRID ─── */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:12px}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;transition:all .2s;position:relative}
-.card.legendary{border:2px double var(--legendary);box-shadow:0 0 12px rgba(251,191,36,0.12)}
-.card.legendary:hover{border-color:var(--legendary);box-shadow:0 0 20px rgba(251,191,36,0.2);background:var(--bg3)}
-.card.rare{border:1.5px dashed var(--rare)}
-.card.rare:hover{border-color:var(--rare);background:var(--bg3)}
-.card.uncommon{border:1.5px dotted var(--uncommon)}
-.card.uncommon:hover{border-color:var(--uncommon);background:var(--bg3)}
-.card.common{border:1px solid var(--common)}
-.card.common:hover{border-color:var(--text4);background:var(--bg3)}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:0;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--border2);background:var(--bg3)}
 .card-head{padding:18px 20px 0;display:flex;justify-content:space-between;align-items:flex-start}
 .card-name{font-size:1rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:8px}
 .card-name .ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
@@ -93,30 +86,11 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 .card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
 .tag{font-size:.7rem;padding:4px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--text4);font-family:'JetBrains Mono',monospace;font-weight:500}
 .tag b{color:var(--text3)}
-
+.card-expand{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.card.open .card-expand{max-height:400px}
+.card-expand-inner{padding:0 20px 18px}
+.card-expand-inner .card-row{margin-bottom:8px}
 .divider{height:1px;background:var(--border);margin:12px 0}
-
-/* ─── LIVE BOARD ─── */
-.board-empty{text-align:center;padding:80px 20px;color:var(--text5)}
-.board-empty .icon{font-size:4rem;margin-bottom:16px;opacity:.3}
-.board-empty h3{font-size:1.2rem;color:var(--text4);font-weight:600;margin-bottom:6px}
-.board-empty p{font-size:.85rem;color:var(--text5)}
-.board-empty .ip{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--text3);margin-top:16px;background:var(--bg2);border:1px solid var(--border);display:inline-flex;padding:10px 20px;border-radius:8px}
-.board-status{text-align:center;padding:20px 20px 0;font-size:.85rem;color:var(--text4)}
-.board-status .count{color:var(--text);font-weight:700;font-size:1.1rem}
-.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:20px;max-width:900px;margin:0 auto}
-.player-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:border-color .2s}
-.player-card:hover{border-color:var(--border2)}
-.player-avatar{width:40px;height:40px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:var(--text3);flex-shrink:0}
-.player-info{min-width:0}
-.player-name{font-size:.95rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.player-power{font-size:.8rem;font-weight:500;margin-top:2px}
-.board-offline{text-align:center;padding:60px 20px;color:var(--text5)}
-.board-offline .icon{font-size:3rem;margin-bottom:12px;opacity:.3}
-.board-offline p{font-size:.9rem;color:var(--text4)}
-.board-loading{text-align:center;padding:60px 20px;color:var(--text5)}
-.board-loading .spinner{display:inline-block;width:24px;height:24px;border:2px solid var(--border2);border-top-color:var(--text3);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 
 /* ─── COMMANDS ─── */
 .cmd-section{margin-bottom:36px}
@@ -134,28 +108,6 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 .cmd-perm{font-size:.65rem;color:var(--text5);text-transform:uppercase;letter-spacing:.5px}
 .cmd-perm.built{color:#22c55e}
 @media(max-width:768px){.cmd-grid{grid-template-columns:1fr}}
-
-/* ─── REVIEWS ─── */
-.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
-.review{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:18px 20px}
-.review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.review-user{font-weight:700;color:var(--white);font-size:.9rem}
-.review-stars{color:#fbbf24;font-size:.85rem;letter-spacing:1px}
-.review-text{font-size:.85rem;color:var(--text3);line-height:1.6}
-.review-date{font-size:.7rem;color:var(--text5);margin-top:10px}
-.review-form{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px}
-.review-form h3{font-size:1rem;font-weight:700;color:var(--white);margin-bottom:14px}
-.review-form textarea{width:100%;min-height:80px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.85rem;resize:vertical;outline:none;margin-bottom:10px}
-.review-form textarea:focus{border-color:var(--text4)}
-.review-form .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.review-form input[type=text]{flex:1;min-width:140px;padding:8px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-family:inherit;font-size:.85rem;outline:none}
-.review-form input[type=text]:focus{border-color:var(--text4)}
-.review-form .star-pick{display:flex;gap:4px}
-.review-form .star-pick span{cursor:pointer;font-size:1.2rem;color:var(--text5);transition:color .15s}
-.review-form .star-pick span.on{color:#fbbf24}
-.review-submit{padding:8px 20px;border-radius:8px;border:1px solid var(--border2);background:var(--bg3);color:var(--white);font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s}
-.review-submit:hover{background:var(--white);color:var(--black)}
-@media(max-width:768px){.reviews-grid{grid-template-columns:1fr}}
 
 /* ─── EMPTY ─── */
 .empty{text-align:center;padding:60px 20px;color:var(--text5)}
@@ -187,7 +139,7 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <span class="copy" onclick="navigator.clipboard.writeText('vantyxsmp.minekeep.gg');this.textContent='Copied!';setTimeout(()=>this.textContent='Click to copy',1500)">Click to copy</span>
 </div>
 <div class="hero-stats">
-<div class="hero-stat"><div class="n">50</div><div class="l">Powers</div></div>
+<div class="hero-stat"><div class="n">100</div><div class="l">Powers</div></div>
 <div class="hero-stat"><div class="n">100</div><div class="l">Abilities</div></div>
 <div class="hero-stat"><div class="n">4</div><div class="l">Rarities</div></div>
 <div class="hero-stat"><div class="n">300</div><div class="l">Total Weight</div></div>
@@ -199,8 +151,6 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div class="nav-tabs">
 <button class="nav-tab active" onclick="showTab('powers',this)">Powers</button>
 <button class="nav-tab" onclick="showTab('commands',this)">Commands</button>
-<button class="nav-tab" onclick="showTab('reviews',this)">Reviews</button>
-<button class="nav-tab" onclick="showTab('live',this)">Live Board</button>
 </div>
 <div class="search-box">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -220,16 +170,6 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div id="tab-powers">
 <div class="grid" id="grid"></div>
 <div class="empty" id="empty" style="display:none"><div class="icon">&#8709;</div><p>No powers found.</p></div>
-</div>
-<div id="tab-live" style="display:none">
-<div class="board-status" id="board-status"></div>
-<div class="board-grid" id="board-grid"></div>
-<div class="board-offline" id="board-offline" style="display:none">
-<div class="icon">&#9889;</div>
-<p>Server offline or API unreachable.</p>
-<div class="ip">vantyxsmp.minekeep.gg</div>
-</div>
-<div class="board-loading" id="board-loading"><div class="spinner"></div></div>
 </div>
 <div id="tab-commands" style="display:none">
 
@@ -327,36 +267,11 @@ body{background:var(--bg);color:var(--text2);font-family:'Inter',system-ui,-appl
 <div class="cmd-args">Also accepts: stop, end</div>
 <div class="cmd-perm">Requires op &mdash; powers.give</div>
 </div>
-</div>
 
 </div>
 </div>
 
-<div id="tab-reviews" style="display:none">
-
-<div class="review-form">
-<h3>Leave a Review</h3>
-<div class="row" style="margin-bottom:10px">
-<input type="text" id="rv-name" placeholder="Your name">
-<div class="star-pick" id="rv-stars">
-<span onclick="pickStars(1)">&#9733;</span>
-<span onclick="pickStars(2)">&#9733;</span>
-<span onclick="pickStars(3)">&#9733;</span>
-<span onclick="pickStars(4)">&#9733;</span>
-<span onclick="pickStars(5)">&#9733;</span>
 </div>
-</div>
-<textarea id="rv-text" placeholder="Write your review about Vantyx SMP..."></textarea>
-<div class="row">
-<button class="review-submit" onclick="submitReview()">Submit Review</button>
-<span id="rv-msg" style="font-size:.8rem;color:var(--text4)"></span>
-</div>
-</div>
-
-<div class="reviews-grid" id="reviews-grid"></div>
-
-</div>
-
 </div>
 
 <div class="footer">
@@ -366,26 +281,26 @@ Vantyx SMP &mdash; Made by leo &mdash; <a href="#">vantyxsmp.minekeep.gg</a>
 <script>
 const TW=300;
 const P=[
-{n:"Wardenmaster",r:"legendary",w:1,e:"&#128293;",p:"Your warden protects you and never strikes you — immune to Sonic Boom + Darkness",a1:"Summon a Warden companion",a1d:"Extremely rare, max 1 active. 150 HP, 9 damage, sonic boom attack.",a2:"Warden Surge — all buffs (30s, stackable)",a2d:"Strength II + Speed II + Regen II + Resistance II + Fire Res I. Re-cast to extend.",c1:0,c2:120,d1:0,d2:30,k:15},
+{n:"Wardenmaster",r:"legendary",w:1,e:"&#128293;",p:"Your warden protects you and never strikes you",a1:"Summon a Warden companion",a1d:"Extremely rare, max 1 active. 150 HP, 9 damage, sonic boom attack.",a2:"Warden Surge — all buffs (30s, stackable)",a2d:"Strength II + Speed II + Regen II + Resistance II + Fire Res I. Re-cast to extend.",c1:0,c2:120,d1:0,d2:30,k:15},
 {n:"Titan",r:"legendary",w:1,e:"&#9889;",p:"+8 Hearts + Strength I + Resistance I",a1:"Ground Slam — AoE knockback + damage",a1d:"6 damage to all nearby entities, knockback.",a2:"Colossus — Resistance V + Strength II + Speed II (20s)",a2d:"Massive self-buff, 20 seconds.",c1:120,c2:240,d1:20,d2:20,k:20},
 {n:"Timewarden",r:"legendary",w:2,e:"&#9200;",p:"No passive — master of time itself",a1:"Time Dilation — enemies slow + Haste (10s)",a1d:"Slowness IV + Weakness II to nearby enemies. Haste II to self.",a2:"Chrono Freeze — freeze nearest enemy (5s)",a2d:"Target cannot move, attack, or use abilities for 5 seconds.",c1:90,c2:180,d1:10,d2:5,k:18},
 {n:"Duper",r:"rare",w:3,e:"&#127916;",p:"Debuff: lightning strike chance when duplicating",a1:"Duplicate held item (single)",a1d:"Clones one item. 25% chance of lightning strike.",a2:"Duplicate full stack",a2d:"Clones entire stack. 80% chance of lightning strike.",c1:1800,c2:10800,d1:0,d2:0,k:12},
 {n:"Illusionist",r:"rare",w:3,e:"&#128123;",p:"Vanish in a cloud of smoke when struck",a1:"Vanish — Invisibility + Speed (10s)",a1d:"Full invisibility + Speed II.",a2:"Mirage — blind + confuse nearby enemies (10s)",a2d:"Blindness + Nausea to all nearby enemies.",c1:60,c2:120,d1:10,d2:10,k:15},
 {n:"Witherlord",r:"rare",w:4,e:"&#128128;",p:"Your wither skeletons protect you and never strike you",a1:"Summon 5 Wither Skeletons (max 10)",a1d:"Companions fight enemies targeting you.",a2:"Soulforge — buff all Wither Skeletons (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:120,d1:0,d2:30,k:18},
-{n:"Voidcaller",r:"rare",w:4,e:"&#128302;",p:"Your endermen protect you and never strike you — endermen won't aggro when looked at",a1:"Summon 5 Endermen (max 10)",a1d:"Endermen teleport to targets and fight.",a2:"Void Empower — buff all Endermen (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:120,d1:0,d2:30,k:18},
+{n:"Voidcaller",r:"rare",w:4,e:"&#128302;",p:"Your endermen protect you and never strike you",a1:"Summon 5 Endermen (max 10)",a1d:"Endermen teleport to targets and fight.",a2:"Void Empower — buff all Endermen (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:120,d1:0,d2:30,k:18},
 {n:"Sniper",r:"rare",w:4,e:"&#127919;",p:"Arrows gain Piercing + extra damage",a1:"Piercing Shot — unblockable arrow",a1d:"High damage, pierces through entities.",a2:"Marked — next hit on target deals 3x",a2d:"Marks nearest enemy. Next hit triple damage.",c1:20,c2:50,d1:0,d2:0,k:12},
 {n:"Reaper",r:"rare",w:4,e:"&#128128;",p:"Your hits inflict Wither",a1:"Soul Reap — heal 3 hearts per hit (12s)",a1d:"5 empowered hits that each heal you.",a2:"Death Coil — pull + Wither + damage enemy",a2d:"Pulls target, Wither II, 8 damage.",c1:30,c2:75,d1:12,d2:0,k:14},
-{n:"Pyromancer",r:"rare",w:4,e:"&#128293;",p:"Your blazes protect you and never strike you — immune to fire and lava",a1:"Summon 5 Blazes (max 10)",a1d:"Blazes shoot fireballs at enemies.",a2:"Inferno — buff all Blazes (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:120,d1:0,d2:30,k:12},
-{n:"Swarmlord",r:"rare",w:4,e:"&#129430;",p:"Your slimes protect you and never strike you — no fall damage + slime bounce on land",a1:"Summon 5 Slimes (max 10)",a1d:"Slimes bounce and attack enemies.",a2:"Acid Surge — buff all Slimes (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II.",c1:120,c2:120,d1:0,d2:30,k:12},
-{n:"Beastmaster",r:"rare",w:4,e:"&#129432;",p:"Your zombified piglins protect you and never strike you — zombified piglins won't aggro",a1:"Summon 5 Zombified Piglins (max 10)",a1d:"Piglins attack enemies near you.",a2:"Brute Rally — buff all Piglins (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II.",c1:120,c2:120,d1:0,d2:30,k:12},
+{n:"Pyromancer",r:"rare",w:4,e:"&#128293;",p:"Your blazes protect you and never strike you",a1:"Summon 5 Blazes (max 10)",a1d:"Blazes shoot fireballs at enemies.",a2:"Inferno — buff all Blazes (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:120,d1:0,d2:30,k:12},
+{n:"Swarmlord",r:"rare",w:4,e:"&#129430;",p:"Your slimes protect you and never strike you",a1:"Summon 5 Slimes (max 10)",a1d:"Slimes bounce and attack enemies.",a2:"Acid Surge — buff all Slimes (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II.",c1:120,c2:120,d1:0,d2:30,k:12},
+{n:"Beastmaster",r:"rare",w:4,e:"&#129432;",p:"Your zombified piglins protect you and never strike you",a1:"Summon 5 Zombified Piglins (max 10)",a1d:"Piglins attack enemies near you.",a2:"Brute Rally — buff all Piglins (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II.",c1:120,c2:120,d1:0,d2:30,k:12},
 {n:"Echo",r:"rare",w:4,e:"&#128172;",p:"15% chance to reflect projectiles",a1:"Echo Strike — next hit 2x damage",a1d:"Double damage on your next melee hit.",a2:"Resonance — echo damage to nearby (10s)",a2d:"Every hit duplicates damage to all nearby enemies.",c1:30,c2:60,d1:0,d2:10,k:12},
 {n:"Shadow",r:"uncommon",w:5,e:"&#128065;",p:"40% chance to inflict Darkness on hit (5s)",a1:"Mind Control — freeze target on hit (10s)",a1d:"Blindness + Nausea + Slowness + Mining Fatigue.",a2:"Shadow Step — teleport 100 blocks",a2d:"Teleport to targeted block through walls.",c1:60,c2:600,d1:10,d2:0,k:15},
 {n:"Life Stealer",r:"uncommon",w:5,e:"&#128154;",p:"+2 Hearts per kill (+3 when A2 unlocked)",a1:"Double hearts per kill (10s)",a1d:"Each kill grants bonus hearts during ability.",a2:"2.5x hearts per kill + 1.3x damage (20s)",a2d:"Enhanced lifesteal with damage boost.",c1:60,c2:60,d1:10,d2:20,k:20},
 {n:"Lucky",r:"uncommon",w:5,e:"&#127808;",p:"Trades 60% cheaper + 20% more XP + Mending & Unbreaking III on enchants + 2x vault loot",a1:"Pick 1 enchantment from menu",a1d:"Choose any applicable enchantment for held item.",a2:"Pick 2 enchantments + table boost",a2d:"Two enchantments + enhanced enchanting table.",c1:45,c2:45,d1:0,d2:0,k:12},
 {n:"Phantom",r:"uncommon",w:5,e:"&#128123;",p:"No fall damage — Phase lets you noclip through blocks",a1:"Phase — noclip walls (5s)",a1d:"Enter Spectator mode temporarily.",a2:"Teleport behind nearest player (30b)",a2d:"Teleport behind nearest visible player.",c1:45,c2:90,d1:5,d2:0,k:15},
 {n:"Mirror",r:"uncommon",w:5,e:"&#128309;",p:"15% chance to reflect projectile damage",a1:"Copy attacker's weapon enchantments (30s)",a1d:"Steals enchantments from last weapon that hit you.",a2:"Reflect ALL projectiles (10s)",a2d:"100% projectile reflection.",c1:60,c2:120,d1:30,d2:10,k:15},
-{n:"Venomancer",r:"uncommon",w:5,e:"&#9762;",p:"Your cave spiders protect you and never strike you — immune to Poison",a1:"Summon 5 Cave Spider companions (max 10)",a1d:"Cave spiders fight enemies near you.",a2:"Venom Surge — buff all Cave Spiders (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
-{n:"Broodmother",r:"uncommon",w:5,e:"&#128375;",p:"Your spiders protect you and never strike you — spiders won't aggro on you",a1:"Summon 5 Spiders (max 10)",a1d:"Spiders lunge at enemies.",a2:"Venom Surge — buff all Spiders (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
+{n:"Nitromancer",r:"uncommon",w:5,e:"&#129522;",p:"Your creepers protect you and never strike you",a1:"Summon 5 Creepers (max 10)",a1d:"Creepers explode on enemies near you.",a2:"Overcharge — buff all Creepers (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
+{n:"Broodmother",r:"uncommon",w:5,e:"&#128375;",p:"Your spiders protect you and never strike you",a1:"Summon 5 Spiders (max 10)",a1d:"Spiders lunge at enemies.",a2:"Venom Surge — buff all Spiders (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
 {n:"Toxin",r:"uncommon",w:5,e:"&#9762;",p:"Your hits inflict Poison",a1:"Poison Cloud — area poison (15s)",a1d:"Poison II in 5-block radius.",a2:"Plague — Poison + Wither on enemy",a2d:"Poison III + Wither II on nearest target.",c1:45,c2:90,d1:15,d2:0,k:15},
 {n:"Gale",r:"uncommon",w:5,e:"&#127744;",p:"Speed I",a1:"Knockback Blast — push + damage nearby",a1d:"Knockback + 3 damage in 7-block radius.",a2:"Updraft — launch + slow fall (10s)",a2d:"Vertical launch with Slow Falling.",c1:20,c2:60,d1:0,d2:10,k:10},
 {n:"Healer",r:"uncommon",w:5,e:"&#128154;",p:"Regeneration I",a1:"Mend — heal 4 hearts + Regen",a1d:"Instant heal + Regen II (8s).",a2:"Healing Beam — you + nearest ally",a2d:"Heals self and nearest player with Regen.",c1:30,c2:60,d1:8,d2:15,k:10},
@@ -400,9 +315,9 @@ const P=[
 {n:"Frost",r:"uncommon",w:6,e:"&#10052;",p:"Frost Aura — nearby enemies are slowed",a1:"Ice Shield — Res II + Fire Res I (15s)",a1d:"Defensive buff combo.",a2:"Blizzard — freeze + slow + damage (15s)",a2d:"AoE slow + damage over time.",c1:30,c2:60,d1:15,d2:15,k:12},
 {n:"Ember",r:"uncommon",w:6,e:"&#128293;",p:"Attacker has a chance to be set on fire",a1:"Fire Nova — ignite nearby enemies",a1d:"Sets all nearby on fire + 4 damage.",a2:"Meteor — giant fireball",a2d:"Large fireball with explosion.",c1:30,c2:90,d1:0,d2:0,k:12},
 {n:"Blademaster",r:"uncommon",w:6,e:"&#9876;",p:"Deal 1.3x damage with a sword",a1:"Execute — Strength III + Speed I (10s)",a1d:"Melee power mode.",a2:"Whirlwind — AoE damage + knockback",a2d:"7 damage + knockback to all nearby.",c1:25,c2:60,d1:10,d2:0,k:12},
-{n:"Necromancer",r:"uncommon",w:6,e:"&#128128;",p:"Your zombie horde protects you and never strikes you — baby zombies won't attack you",a1:"Summon 5 Zombies (max 10)",a1d:"Zombies fight enemies near you.",a2:"Empower horde (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
-{n:"Bone Warden",r:"uncommon",w:6,e:"&#128128;",p:"Your skeletons protect you and never strike you — skeleton arrows can't hurt you",a1:"Summon 5 Skeletons (max 10)",a1d:"Skeletons shoot arrows at enemies.",a2:"Bone Shield — buff Skeletons (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
-{n:"Druid",r:"uncommon",w:5,e:"&#128058;",p:"Your wolf pack protects you and never strikes you — animals won't flee from you",a1:"Summon 5 Wolves (max 10)",a1d:"Wolves bite enemies near you.",a2:"Wild Empower — buff Wolves (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II.",c1:120,c2:120,d1:0,d2:30,k:10},
+{n:"Necromancer",r:"uncommon",w:6,e:"&#128128;",p:"Your zombie horde protects you and never strikes you",a1:"Summon 5 Zombies (max 10)",a1d:"Zombies fight enemies near you.",a2:"Empower horde (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
+{n:"Bone Warden",r:"uncommon",w:6,e:"&#128128;",p:"Your skeletons protect you and never strike you",a1:"Summon 5 Skeletons (max 10)",a1d:"Skeletons shoot arrows at enemies.",a2:"Bone Shield — buff Skeletons (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II + Fire Res I.",c1:120,c2:90,d1:0,d2:30,k:15},
+{n:"Druid",r:"uncommon",w:5,e:"&#128058;",p:"Your wolf pack protects you and never strike you",a1:"Summon 5 Wolves (max 10)",a1d:"Wolves bite enemies near you.",a2:"Wild Empower — buff Wolves (30s, stackable)",a2d:"Str II + Spd II + Regen II + Res II.",c1:120,c2:120,d1:0,d2:30,k:10},
 {n:"Stonehide",r:"common",w:7,e:"&#129704;",p:"+6 Hearts (+8 when A2 unlocked)",a1:"Bedrock Skin — Resistance III (15s)",a1d:"Heavy damage reduction.",a2:"Stone Form — Resistance V + self-slow (15s)",a2d:"Extreme defense, self slow.",c1:60,c2:120,d1:15,d2:15,k:15},
 {n:"Water",r:"common",w:7,e:"&#127754;",p:"Speed II + Dolphin's Grace II + Water Breathing III",a1:"Water Wave — 6-block arc damage",a1d:"1-2 hearts, ignores armor.",a2:"Lightning on hit — 60% (15s)",a2d:"Chain lightning on melee.",c1:15,c2:15,d1:0,d2:15,k:12},
 {n:"Strength",r:"common",w:7,e:"&#128170;",p:"Strength I",a1:"Apply Sharpness III to weapon",a1d:"Temporary enchantment.",a2:"Sharpness V + 1.2x with netherite",a2d:"Best with full netherite gear.",c1:30,c2:30,d1:0,d2:0,k:12},
@@ -414,7 +329,76 @@ const P=[
 {n:"Sharpshooter",r:"common",w:7,e:"&#127919;",p:"Arrow damage +50%, crits deal 2x",a1:"Aimed Shot — 3x damage",a1d:"Triple damage on next arrow.",a2:"Barrage — 5 rapid arrows (5s)",a2d:"Fire 5 arrows in rapid succession.",c1:30,c2:60,d1:0,d2:5,k:12},
 {n:"Ironskin",r:"common",w:7,e:"&#129704;",p:"+8 Armor",a1:"Iron Skin — +16 armor (15s)",a1d:"15 seconds of extra armor.",a2:"Steel Form — +24 armor (20s)",a2d:"20 seconds of maximum armor.",c1:45,c2:90,d1:15,d2:20,k:15},
 {n:"Swift",r:"common",w:8,e:"&#9889;",p:"Speed I",a1:"Quick Feet — Speed IV (10s)",a1d:"10 seconds of extreme speed.",a2:"Blur — Speed VI + Invisibility (10s)",a2d:"10 seconds of maximum speed + invisibility.",c1:20,c2:45,d1:10,d2:10,k:10},
-{n:"Regenerator",r:"common",w:8,e:"&#128154;",p:"Regeneration I (out of combat: Regen II)",a1:"Second Wind — Regen V (5s)",a1d:"5 seconds of maximum regeneration.",a2:"Renewal — Regen III + Absorption II (15s)",a2d:"15 seconds of regen + absorption.",c1:30,c2:60,d1:5,d2:15,k:12}
+{n:"Regenerator",r:"common",w:8,e:"&#128154;",p:"Regeneration I (out of combat: Regen II)",a1:"Second Wind - Regen V (5s)",a1d:"5 seconds of maximum regeneration.",a2:"Renewal - Regen III + Absorption II (15s)",a2d:"15 seconds of regen + absorption.",c1:30,c2:60,d1:5,d2:15,k:12},
+{n:"Haste",r:"common",w:7,e:"&#9889;",p:"Haste I",a1:"Haste III (10s)",a1d:"10 seconds of Haste III.",a2:"Haste IV + Speed II (15s)",a2d:"15 seconds of Haste IV + Speed II.",c1:30,c2:60,d1:10,d2:15,k:12},
+{n:"Jump",r:"common",w:7,e:"&#8682;",p:"Jump Boost I",a1:"Jump Boost IV (10s)",a1d:"10 seconds of Jump Boost IV.",a2:"Jump Boost V + Speed II (15s)",a2d:"15 seconds of Jump Boost V + Speed II.",c1:30,c2:60,d1:10,d2:15,k:12},
+{n:"Frog",r:"common",w:7,e:"&#128056;",p:"Speed I + Jump Boost I",a1:"Speed IV + Jump Boost III (5s)",a1d:"5 seconds of Speed IV + Jump Boost III.",a2:"Speed V + Jump Boost IV + Water Breathing (20s)",a2d:"20 seconds of enhanced frog abilities.",c1:30,c2:60,d1:5,d2:20,k:12},
+{n:"Turtle",r:"common",w:7,e:"&#128034;",p:"+6 Hearts",a1:"Resistance III (20s)",a1d:"20 seconds of Resistance III.",a2:"Resistance IV + Slowness I + Regen II (20s)",a2d:"20 seconds of tank mode.",c1:45,c2:60,d1:20,d2:20,k:15},
+{n:"Cow",r:"common",w:8,e:"&#128007;",p:"Saturation I",a1:"Saturation IV (30s)",a1d:"30 seconds of Saturation IV.",a2:"Saturation V + Resistance II (30s)",a2d:"30 seconds of Saturation V + Resistance II.",c1:60,c2:60,d1:30,d2:30,k:10},
+{n:"Pig",r:"common",w:8,e:"&#128023;",p:"Speed I",a1:"Speed III (10s)",a1d:"10 seconds of Speed III.",a2:"Speed IV + Strength II (20s)",a2d:"20 seconds of Speed IV + Strength II.",c1:30,c2:60,d1:10,d2:20,k:10},
+{n:"Sheep",r:"common",w:7,e:"&#128002;",p:"Regeneration I",a1:"Regeneration III (15s)",a1d:"15 seconds of Regeneration III.",a2:"Regeneration IV + Resistance II (20s)",a2d:"20 seconds of Regeneration IV + Resistance II.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"Slime",r:"common",w:7,e:"&#129430;",p:"Jump Boost I + Speed I",a1:"Jump Boost IV + Speed II (10s)",a1d:"10 seconds of Jump Boost IV + Speed II.",a2:"Jump Boost V + Speed III + Slow Falling (20s)",a2d:"20 seconds of enhanced slime abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Glow Squid",r:"common",w:7,e:"&#128193;",p:"Glowing on hit",a1:"Glowing on nearby enemies (10s)",a1d:"10 seconds of Glowing on nearby enemies.",a2:"Glowing on all enemies + Speed II (20s)",a2d:"20 seconds of Glowing + Speed II.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Axolotl",r:"common",w:7,e:"&#129426;",p:"Water Breathing I + Dolphin's Grace I",a1:"Water Breathing IV + Dolphin's Grace II (15s)",a1d:"15 seconds of enhanced water abilities.",a2:"Water Breathing V + Dolphin's Grace III + Strength II (20s)",a2d:"20 seconds of enhanced axolotl abilities.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"Panda",r:"common",w:7,e:"&#128038;",p:"Saturation I + Resistance I",a1:"Saturation IV + Resistance II (20s)",a1d:"20 seconds of enhanced panda abilities.",a2:"Saturation V + Resistance III + Regen II (20s)",a2d:"20 seconds of enhanced panda abilities.",c1:45,c2:60,d1:20,d2:20,k:12},
+{n:"Cat",r:"common",w:8,e:"&#128049;",p:"Speed I + Invisibility I",a1:"Speed III + Invisibility (5s)",a1d:"5 seconds of Speed III + Invisibility.",a2:"Speed IV + Invisibility + Strength II (20s)",a2d:"20 seconds of enhanced cat abilities.",c1:30,c2:60,d1:5,d2:20,k:12},
+{n:"Wolf",r:"common",w:7,e:"&#128056;",p:"Strength I",a1:"Strength III (10s)",a1d:"10 seconds of Strength III.",a2:"Strength IV + Speed II (20s)",a2d:"20 seconds of Strength IV + Speed II.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Parrot",r:"common",w:8,e:"&#128056;",p:"Speed I",a1:"Speed III (10s)",a1d:"10 seconds of Speed III.",a2:"Speed IV + Haste III (20s)",a2d:"20 seconds of Speed IV + Haste III.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Ocelot",r:"common",w:8,e:"&#128049;",p:"Speed I + Luck I",a1:"Speed III (10s)",a1d:"10 seconds of Speed III.",a2:"Speed IV + Luck III (20s)",a2d:"20 seconds of Speed IV + Luck III.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Fox",r:"common",w:8,e:"&#128009;",p:"Speed I + Luck I",a1:"Speed III + Luck II (10s)",a1d:"10 seconds of Speed III + Luck II.",a2:"Speed IV + Luck III + Strength II (20s)",a2d:"20 seconds of enhanced fox abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Coyote",r:"common",w:8,e:"&#128008;",p:"Speed I",a1:"Speed III (10s)",a1d:"10 seconds of Speed III.",a2:"Speed IV + Strength II (20s)",a2d:"20 seconds of Speed IV + Strength II.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Stray",r:"common",w:7,e:"&#128128;",p:"Slowness on hit",a1:"Slowness II on hit + Strength II (20s)",a1d:"20 seconds of enhanced stray abilities.",a2:"Slowness III on hit + Strength II (20s)",a2d:"20 seconds of enhanced stray abilities.",c1:30,c2:60,d1:20,d2:20,k:12},
+{n:"Witch",r:"common",w:7,e:"&#128128;",p:"Speed I + Regeneration I",a1:"Speed III + Regeneration I (10s)",a1d:"10 seconds of enhanced witch abilities.",a2:"Speed IV + Regen II + Strength II (20s)",a2d:"20 seconds of enhanced witch abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Pillager",r:"common",w:7,e:"&#128117;",p:"Strength I",a1:"Strength III (10s)",a1d:"10 seconds of Strength III.",a2:"Strength IV + Speed II (20s)",a2d:"20 seconds of Strength IV + Speed II.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Vindicator",r:"common",w:7,e:"&#128117;",p:"Strength I + Resistance I",a1:"Strength III + Resistance I (10s)",a1d:"10 seconds of enhanced vindicator abilities.",a2:"Strength IV + Resistance II (20s)",a2d:"20 seconds of enhanced vindicator abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Evoker",r:"common",w:7,e:"&#128128;",p:"Speed I + Strength I",a1:"Speed III + Strength I (10s)",a1d:"10 seconds of enhanced evoker abilities.",a2:"Speed IV + Strength II + Invisibility (20s)",a2d:"20 seconds of enhanced evoker abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Illusioner",r:"common",w:7,e:"&#128128;",p:"Invisibility I + Speed I",a1:"Invisibility + Speed III (5s)",a1d:"5 seconds of Invisibility + Speed III.",a2:"Invisibility + Speed IV + Strength II (20s)",a2d:"20 seconds of enhanced illusioner abilities.",c1:30,c2:60,d1:5,d2:20,k:12},
+{n:"Ravager",r:"common",w:7,e:"&#129432;",p:"Resistance I + Knockback I",a1:"Resistance III + Knockback I (15s)",a1d:"15 seconds of enhanced ravager abilities.",a2:"Resistance IV + Knockback III + Strength II (20s)",a2d:"20 seconds of enhanced ravager abilities.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"Shulker",r:"common",w:7,e:"&#129426;",p:"Resistance I",a1:"Resistance III (20s)",a1d:"20 seconds of Resistance III.",a2:"Resistance IV + Levitation on attackers (20s)",a2d:"20 seconds of enhanced shulker abilities.",c1:45,c2:60,d1:20,d2:20,k:12},
+{n:"Magma Cube",r:"common",w:7,e:"&#128293;",p:"Fire Resistance I + Strength I",a1:"Fire Resistance III + Strength I (15s)",a1d:"15 seconds of enhanced magma cube abilities.",a2:"Fire Resistance IV + Strength III (20s)",a2d:"20 seconds of enhanced magma cube abilities.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"Blaze",r:"common",w:7,e:"&#128293;",p:"Fire Resistance I + Strength I",a1:"Fire Resistance III + Strength I (15s)",a1d:"15 seconds of enhanced blaze abilities.",a2:"Fire Resistance IV + Strength III (20s)",a2d:"20 seconds of enhanced blaze abilities.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"Ghast",r:"common",w:8,e:"&#128119;",p:"Speed I + Fire Resistance I",a1:"Speed III + Fire Resistance I (10s)",a1d:"10 seconds of enhanced ghast abilities.",a2:"Speed IV + Fire Resistance II (20s)",a2d:"20 seconds of enhanced ghast abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Cave Spider",r:"common",w:8,e:"&#128128;",p:"Speed I + Poison I",a1:"Speed III + Poison II (20s)",a1d:"20 seconds of enhanced cave spider abilities.",a2:"Speed IV + Poison II (20s)",a2d:"20 seconds of enhanced cave spider abilities.",c1:30,c2:60,d1:20,d2:20,k:12},
+{n:"Spider",r:"common",w:7,e:"&#128128;",p:"Speed I + Jump Boost I",a1:"Speed III + Jump Boost II (10s)",a1d:"10 seconds of enhanced spider abilities.",a2:"Speed IV + Jump Boost III + Poison I (20s)",a2d:"20 seconds of enhanced spider abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Endermite",r:"common",w:8,e:"&#128128;",p:"Speed I",a1:"Speed III (10s)",a1d:"10 seconds of Speed III.",a2:"Speed IV + Teleport III (20s)",a2d:"20 seconds of enhanced endermite abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Silverfish",r:"common",w:8,e:"&#128128;",p:"Speed I",a1:"Speed III (10s)",a1d:"10 seconds of Speed III.",a2:"Speed IV + Strength I (20s)",a2d:"20 seconds of enhanced silverfish abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"Guardian",r:"common",w:7,e:"&#129426;",p:"Resistance I + Thorns I",a1:"Resistance III (20s)",a1d:"20 seconds of Resistance III.",a2:"Resistance IV + Thorns II (20s)",a2d:"20 seconds of enhanced guardian abilities.",c1:45,c2:60,d1:20,d2:20,k:12},
+{n:"Dolphin",r:"common",w:7,e:"&#128056;",p:"Dolphin's Grace I + Water Breathing I",a1:"Dolphin's Grace III + Water Breathing IV (15s)",a1d:"15 seconds of enhanced dolphin abilities.",a2:"Dolphin's Grace IV + Water Breathing V + Speed III (20s)",a2d:"20 seconds of enhanced dolphin abilities.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"Sniffer",r:"common",w:8,e:"&#128038;",p:"Speed I + Haste I",a1:"Speed III + Haste II (20s)",a1d:"20 seconds of enhanced sniffer abilities.",a2:"Speed IV + Haste II (20s)",a2d:"20 seconds of enhanced sniffer abilities.",c1:30,c2:60,d1:20,d2:20,k:12},
+{n:"Armadillo",r:"common",w:7,e:"&#128008;",p:"Resistance I + Strength I",a1:"Resistance III + Strength II (20s)",a1d:"20 seconds of enhanced armadillo abilities.",a2:"Resistance IV + Strength II (20s)",a2d:"20 seconds of enhanced armadillo abilities.",c1:45,c2:60,d1:20,d2:20,k:12},
+{n:"Breeze",r:"common",w:8,e:"&#128119;",p:"Speed I + Slow Falling I",a1:"Speed III + Slow Falling (10s)",a1d:"10 seconds of enhanced breeze abilities.",a2:"Speed IV + Slow Falling + Strength II (20s)",a2d:"20 seconds of enhanced breeze abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"NINJA",r:"common",w:8,e:"&#128123;",p:"Speed I + Invisibility I + Strength I",a1:"Speed IV + Invisibility + Strength I (5s)",a1d:"5 seconds of enhanced ninja abilities.",a2:"Speed V + Invisibility + Strength III + Instant Damage (20s)",a2d:"20 seconds of enhanced ninja abilities.",c1:30,c2:60,d1:5,d2:20,k:12},
+{n:"SAMURAI",r:"uncommon",w:6,e:"&#9876;",p:"Strength I + Resistance I",a1:"Strength III + Resistance II (10s)",a1d:"10 seconds of enhanced samurai abilities.",a2:"Strength IV + Resistance III + Speed II (20s)",a2d:"20 seconds of enhanced samurai abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"ASSASSIN",r:"uncommon",w:6,e:"&#128123;",p:"Speed I + Strength I + Invisibility I",a1:"Speed IV + Strength II + Invisibility (5s)",a1d:"5 seconds of enhanced assassin abilities.",a2:"Speed V + Strength III + Invisibility + Instant Damage (20s)",a2d:"20 seconds of enhanced assassin abilities.",c1:30,c2:60,d1:5,d2:20,k:12},
+{n:"KNIGHT",r:"uncommon",w:6,e:"&#9876;",p:"Resistance I + Strength I",a1:"Resistance III + Strength II (15s)",a1d:"15 seconds of enhanced knight abilities.",a2:"Resistance IV + Strength III + Speed II (20s)",a2d:"20 seconds of enhanced knight abilities.",c1:30,c2:60,d1:15,d2:20,k:12},
+{n:"BARBARIAN",r:"uncommon",w:6,e:"&#128170;",p:"Strength I + Speed I + Resistance I",a1:"Strength III + Speed II + Resistance I (10s)",a1d:"10 seconds of enhanced barbarian abilities.",a2:"Strength IV + Speed III + Resistance II + Wither I (20s)",a2d:"20 seconds of enhanced barbarian abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"SHAMAN",r:"uncommon",w:6,e:"&#128154;",p:"Regeneration I + Resistance I",a1:"Regeneration III + Resistance II (15s)",a1d:"15 seconds of enhanced shaman abilities.",a2:"Regeneration IV + Resistance III + Strength II (20s)",a2d:"20 seconds of enhanced shaman abilities.",c1:30,c2:60,d1:15,d2:20,k:12},
+{n:"ENGINEER",r:"uncommon",w:6,e:"&#9881;",p:"Haste I + Speed I",a1:"Haste III + Speed II (15s)",a1d:"15 seconds of enhanced engineer abilities.",a2:"Haste IV + Speed III + Build Boost III (20s)",a2d:"20 seconds of enhanced engineer abilities.",c1:30,c2:60,d1:15,d2:20,k:12},
+{n:"THIEF",r:"uncommon",w:6,e:"&#128123;",p:"Speed I + Luck I + Strength I",a1:"Speed IV + Luck III + Strength I (10s)",a1d:"10 seconds of enhanced thief abilities.",a2:"Speed V + Luck IV + Strength III + Invisibility (20s)",a2d:"20 seconds of enhanced thief abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"HUNTER",r:"uncommon",w:6,e:"&#127919;",p:"Strength I + Speed I",a1:"Strength III + Speed II + Mark (10s)",a1d:"10 seconds of enhanced hunter abilities.",a2:"Strength IV + Speed III + Mark III + Instant Damage (20s)",a2d:"20 seconds of enhanced hunter abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"RANGER",r:"uncommon",w:6,e:"&#127919;",p:"Speed I + Strength I",a1:"Speed III + Strength II + Arrow Storm (10s)",a1d:"10 seconds of enhanced ranger abilities.",a2:"Speed IV + Strength III + Arrow Storm II (20s)",a2d:"20 seconds of enhanced ranger abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"PALADIN",r:"uncommon",w:6,e:"&#9876;",p:"Resistance I + Regeneration I + Strength I",a1:"Resistance III + Regeneration II + Strength I (15s)",a1d:"15 seconds of enhanced paladin abilities.",a2:"Resistance IV + Regeneration III + Strength III (20s)",a2d:"20 seconds of enhanced paladin abilities.",c1:30,c2:60,d1:15,d2:20,k:12},
+{n:"CLERIC",r:"uncommon",w:6,e:"&#128154;",p:"Regeneration I + Resistance I",a1:"Regeneration III + Resistance II + Heal (15s)",a1d:"15 seconds of enhanced cleric abilities.",a2:"Regeneration IV + Resistance III + Heal III (20s)",a2d:"20 seconds of enhanced cleric abilities.",c1:30,c2:60,d1:15,d2:20,k:12},
+{n:"MAGE",r:"uncommon",w:6,e:"&#128123;",p:"Speed I + Strength I",a1:"Speed II + Strength II + Magic Missile (10s)",a1d:"10 seconds of enhanced mage abilities.",a2:"Speed III + Strength III + Magic Missile III (20s)",a2d:"20 seconds of enhanced mage abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"WARLOCK",r:"uncommon",w:6,e:"&#128123;",p:"Strength I + Speed I",a1:"Strength III + Speed II + Shadow Bolt (10s)",a1d:"10 seconds of enhanced warlock abilities.",a2:"Strength IV + Speed III + Shadow Bolt III (20s)",a2d:"20 seconds of enhanced warlock abilities.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"CRYOMANCER",r:"uncommon",w:6,e:"&#10052;",p:"Ice Aura - nearby enemies are slowed",a1:"Ice Nova - freeze + damage all nearby (10s)",a1d:"10 seconds of ice nova.",a2:"Absolute Zero - freeze + slow + damage all nearby (20s)",a2d:"20 seconds of absolute zero.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"ELECTROMANCER",r:"uncommon",w:6,e:"&#9928;",p:"Lightning on hit",a1:"Lightning Storm - chain lightning (10s)",a1d:"10 seconds of lightning storm.",a2:"Lightning Storm II - chain lightning + damage (20s)",a2d:"20 seconds of enhanced lightning storm.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"GEOMANCER",r:"uncommon",w:6,e:"&#127756;",p:"Resistance I + knockback on hit",a1:"Earth Wall - Resistance III + knockback (15s)",a1d:"15 seconds of earth wall.",a2:"Earthquake II - Resistance IV + knockback III + damage (20s)",a2d:"20 seconds of earthquake.",c1:30,c2:60,d1:15,d2:20,k:12},
+{n:"AEROMANCER",r:"uncommon",w:6,e:"&#127744;",p:"Speed I + Slow Falling I",a1:"Gale Force - knockback + lift (10s)",a1d:"10 seconds of gale force.",a2:"Hurricane - Speed IV + knockback + lift (20s)",a2d:"20 seconds of hurricane.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"HYDRA",r:"rare",w:4,e:"&#128038;",p:"+4 Hearts",a1:"Summon Baby Hydra (max 1)",a1d:"Baby hydra companion.",a2:"Hydra Form - Regen III + Resistance III + multiple heads (20s)",a2d:"20 seconds of hydra form.",c1:120,c2:120,d1:0,d2:20,k:18},
+{n:"PHOENIX",r:"rare",w:4,e:"&#128293;",p:"Rebirth - revive once on death",a1:"Rebirth - revive once with full health (5m cooldown)",a1d:"Revive once on death.",a2:"Phoenix Rebirth II - revive twice with full health (5m cooldown)",a2d:"Revive twice on death.",c1:300,c2:300,d1:0,d2:0,k:18},
+{n:"UNICORN",r:"rare",w:4,e:"&#128038;",p:"Healing aura on nearby allies",a1:"Healing Aura - Regen II to nearby allies (15s)",a1d:"15 seconds of healing aura.",a2:"Healing Aura II - Regen III to all nearby allies (20s)",a2d:"20 seconds of enhanced healing aura.",c1:45,c2:60,d1:15,d2:20,k:12},
+{n:"PEGASUS",r:"rare",w:4,e:"&#128056;",p:"Slow Falling I + Speed I",a1:"Flight - Slow Falling + Speed II (10s)",a1d:"10 seconds of flight.",a2:"Divine Flight - Slow Falling + Speed IV + Resistance II (20s)",a2d:"20 seconds of divine flight.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"GRIFFIN",r:"rare",w:4,e:"&#128056;",p:"Strength I + Speed I",a1:"Dive Bomb - Strength III + knockback (10s)",a1d:"10 seconds of dive bomb.",a2:"Griffin Dive II - Strength IV + knockback II + Speed III (20s)",a2d:"20 seconds of enhanced dive bomb.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"CERBERUS",r:"rare",w:4,e:"&#128128;",p:"Strength I + Speed I",a1:"Triple Bite - 3x damage (10s)",a1d:"10 seconds of triple bite.",a2:"Triple Bite II - 3x damage + Wither (20s)",a2d:"20 seconds of enhanced triple bite.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"MINOTAUR",r:"rare",w:4,e:"&#128117;",p:"Strength I + knockback on hit",a1:"Charge - Strength III + knockback (10s)",a1d:"10 seconds of charge.",a2:"Charge II - Strength IV + knockback II + Speed III (20s)",a2d:"20 seconds of enhanced charge.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"CYCLOPS",r:"rare",w:4,e:"&#128128;",p:"Slowness on hit + Strength I",a1:"Petrify - Slowness III + Weakness (10s)",a1d:"10 seconds of petrify.",a2:"Petrify II - Slowness IV + Weakness II + Strength II (20s)",a2d:"20 seconds of enhanced petrify.",c1:30,c2:60,d1:10,d2:20,k:12},
+{n:"GOD",r:"legendary",w:1,e:"&#128293;",p:"+10 Hearts + Strength II + Resistance II + Regeneration I",a1:"Divine Form - Strength III + Resistance III + Regeneration II for 30s",a1d:"30 seconds of divine power.",a2:"Divine Judgment - Strength IV + Resistance IV + Regeneration III + Speed III for 60s",a2d:"60 seconds of ultimate divine power.",c1:300,c2:600,d1:30,d2:60,k:20},
+{n:"IMMORTAL",r:"legendary",w:1,e:"&#128154;",p:"+20 Hearts + Regeneration III + Resistance II",a1:"Immortal Form - Regeneration IV + Resistance III for 30s",a1d:"30 seconds of immortal form.",a2:"Immortal Form II - Regeneration V + Resistance IV + Immune to most damage for 60s",a2d:"60 seconds of true immortality.",c1:300,c2:600,d1:30,d2:60,k:20},
+{n:"INVINCIBLE",r:"legendary",w:1,e:"&#128119;",p:"+20 Hearts + Resistance III + Immune to most damage",a1:"Invincible Form - Resistance IV + Immune to most damage for 30s",a1d:"30 seconds of invincibility.",a2:"Invincible Form II - Resistance V + Immune to all damage for 60s",a2d:"60 seconds of total invincibility.",c1:300,c2:600,d1:30,d2:60,k:20},
+{n:"OMNIPOTENT",r:"legendary",w:1,e:"&#9928;",p:"+20 Hearts + Strength III + Resistance III + Regeneration II + Speed II",a1:"Omnipotent Form - Strength IV + Resistance IV + Regeneration III + Speed III for 30s",a1d:"30 seconds of omnipotence.",a2:"Omnipotence - Strength V + Resistance V + Regeneration IV + Speed IV for 60s",a2d:"60 seconds of absolute omnipotence.",c1:300,c2:600,d1:30,d2:60,k:20},
+{n:"COSMIC",r:"legendary",w:1,e:"&#128293;",p:"+15 Hearts + Strength III + Resistance II + Regeneration I + Speed II",a1:"Cosmic Form - Strength IV + Resistance III + Regeneration II + Speed III for 30s",a1d:"30 seconds of cosmic power.",a2:"Cosmic Ascension - Strength V + Resistance IV + Regeneration III + Speed IV for 60s",a2d:"60 seconds of cosmic ascension.",c1:300,c2:600,d1:30,d2:60,k:20},
+{n:"ETERNAL",r:"legendary",w:1,e:"&#128154;",p:"+20 Hearts + Regeneration III + Resistance III + Immune to most damage",a1:"Eternal Form - Regeneration IV + Resistance IV + Immune to most damage for 30s",a1d:"30 seconds of eternal form.",a2:"Eternal Form II - Regeneration V + Resistance V + Immune to most damage for 60s",a2d:"60 seconds of true eternity.",c1:300,c2:600,d1:30,d2:60,k:20}
 ];
 
 let filter='all',tab='powers';
@@ -431,7 +415,7 @@ if(!list.length){g.innerHTML='';e.style.display='';return}
 e.style.display='none';
 g.innerHTML=list.map(p=>{
 const ch=((p.w/TW)*100).toFixed(2);
-return`<div class="card ${p.r}">
+return`<div class="card ${p.r}" onclick="this.classList.toggle('open')">
 <div class="card-head">
 <div class="card-name"><span class="ic">${p.e}</span>${p.n}</div>
 <span class="rtag ${p.r}">${p.r}</span>
@@ -440,9 +424,7 @@ return`<div class="card ${p.r}">
 <div class="card-chance">${ch}% roll chance &middot; weight ${p.w}/${TW}</div>
 <div class="card-row"><div class="lbl">Passive</div><div class="val passive">${p.p}</div></div>
 <div class="card-row"><div class="lbl">Ability 1 &mdash; F</div><div class="val">${p.a1}</div></div>
-<div class="card-row"><div class="lbl">A1 Details</div><div class="val">${p.a1d}</div></div>
 <div class="card-row"><div class="lbl">Ability 2 &mdash; Shift+F</div><div class="val">${p.a2}</div></div>
-<div class="card-row"><div class="lbl">A2 Details</div><div class="val">${p.a2d}</div></div>
 <div class="card-tags">
 <span class="tag">A1 CD <b>${fmtCd(p.c1)}</b></span>
 <span class="tag">A1 Dur <b>${p.d1?p.d1+'s':'&mdash;'}</b></span>
@@ -451,74 +433,16 @@ return`<div class="card ${p.r}">
 <span class="tag">Kills <b>${p.k}</b></span>
 </div>
 </div>
+<div class="card-expand"><div class="card-expand-inner">
+<div class="divider"></div>
+<div class="card-row"><div class="lbl">A1 Details</div><div class="val">${p.a1d}</div></div>
+<div class="card-row"><div class="lbl">A2 Details</div><div class="val">${p.a2d}</div></div>
+</div></div>
 </div>`}).join('');
 }
 function setFilter(f,el){filter=f;document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));el.classList.add('on');render()}
-function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.getElementById('tab-reviews').style.display=t==='reviews'?'':'none';document.getElementById('tab-live').style.display=t==='live'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none';if(t==='reviews')renderReviews();if(t==='live')renderLive()}
+function showTab(t,el){tab=t;document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));el.classList.add('active');document.getElementById('tab-powers').style.display=t==='powers'?'':'none';document.getElementById('tab-commands').style.display=t==='commands'?'':'none';document.querySelector('.search-box').style.display=t==='powers'?'':'none';document.querySelector('.filters').style.display=t==='powers'?'flex':'none'}
 render();
-
-/* ─── LIVE BOARD ─── */
-const API_URL='http://vantyxsmp.minekeep.gg:8080/players';
-let livePolling=null;
-function renderLive(){
-if(livePolling)clearInterval(livePolling);
-fetchLive();
-livePolling=setInterval(fetchLive,15000);
-}
-function fetchLive(){
-fetch(API_URL,{mode:'cors'}).then(r=>r.json()).then(data=>{
-document.getElementById('board-loading').style.display='none';
-if(data.count===0){
-document.getElementById('board-offline').style.display='none';
-document.getElementById('board-status').innerHTML='<span class="count">0</span> players online';
-document.getElementById('board-grid').innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text5)">No players online.</div>';
-}else{
-document.getElementById('board-offline').style.display='none';
-document.getElementById('board-status').innerHTML='<span class="count">'+data.count+'</span> player'+(data.count!==1?'s':'')+' online';
-document.getElementById('board-grid').innerHTML=data.players.map(p=>{
-const initial=p.name.charAt(0).toUpperCase();
-return '<div class="player-card"><div class="player-avatar">'+initial+'</div><div class="player-info"><div class="player-name">'+esc(p.name)+'</div><div class="player-power" style="color:'+p.rarityColor+'">'+esc(p.power)+'</div></div></div>';
-}).join('');
-}
-}).catch(()=>{
-document.getElementById('board-loading').style.display='none';
-document.getElementById('board-offline').style.display='';
-document.getElementById('board-grid').innerHTML='';
-document.getElementById('board-status').innerHTML='';
-});
-}
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
-
-/* ─── REVIEWS ─── */
-let rvStars=0;
-const defaultReviews=[
-{u:"xXSlayerXx",s:5,t:"Best power plugin I've ever played. Frost is insane.",d:"2026-07-20"},
-{u:"CreeperHunter",s:4,t:"Love it but Blademaster needs a small nerf.",d:"2026-07-19"},
-{u:"DarkMage99",s:5,t:"Voidcaller + Endermen is so broken lmao keep it",d:"2026-07-18"},
-{u:"PvPKing",s:3,t:"Cool powers but some cooldowns are too long",d:"2026-07-17"},
-{u:"BuilderPro",s:5,t:"Finally a power plugin that actually works on 1.21",d:"2026-07-16"}
-];
-function getReviews(){const s=localStorage.getItem('vantyx-reviews');return s?JSON.parse(s):[]}
-function saveReviews(r){localStorage.setItem('vantyx-reviews',JSON.stringify(r))}
-function pickStars(n){rvStars=n;document.querySelectorAll('#rv-stars span').forEach((s,i)=>s.classList.toggle('on',i<n))}
-function renderReviews(){
-const reviews=getReviews();
-document.getElementById('reviews-grid').innerHTML=reviews.map(r=>`<div class="review"><div class="review-head"><span class="review-user">${r.u}</span><span class="review-stars">${'&#9733;'.repeat(r.s)}${'&#9734;'.repeat(5-r.s)}</span></div><div class="review-text">${r.t}</div><div class="review-date">${r.d}</div></div>`).join('');
-}
-function submitReview(){
-const name=document.getElementById('rv-name').value.trim();
-const text=document.getElementById('rv-text').value.trim();
-if(!name||!text||!rvStars){document.getElementById('rv-msg').textContent='Fill name, review, and pick stars';return}
-const reviews=getReviews();
-reviews.unshift({u:name,s:rvStars,t:text,d:new Date().toISOString().split('T')[0]});
-saveReviews(reviews);
-document.getElementById('rv-name').value='';
-document.getElementById('rv-text').value='';
-pickStars(0);
-document.getElementById('rv-msg').textContent='Review submitted!';
-renderReviews();
-}
-renderReviews();
 </script>
 </body>
 </html>
